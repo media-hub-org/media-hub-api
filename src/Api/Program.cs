@@ -1,3 +1,4 @@
+using MediaHub.Api.Middleware;
 using MediaHub.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,6 +24,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<DeviceTokenMiddleware>();
 
 app.MapControllers();
 
