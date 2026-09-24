@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using MediaHub.Api.BackgroundServices;
 using MediaHub.Api.Middleware;
 using MediaHub.Application.Services;
@@ -8,7 +9,12 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
 builder.Services.AddOpenApi();
 
 builder.Services.AddDbContext<AppDbContext>(options =>

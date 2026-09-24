@@ -25,7 +25,7 @@ public class MusicIngestionService
 
         await using var rawStream = await sourceProvider.GetRawStreamAsync(sourceInput, cancellationToken);
 
-        var storageKey = $"music/{Guid.NewGuid()}";
+        var storageKey = $"music/{Guid.NewGuid()}{metadata.FileExtension}";
 
         await _storageService.UploadAsync(storageKey, rawStream, contentType, cancellationToken);
 

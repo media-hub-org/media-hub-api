@@ -22,7 +22,7 @@ public class YouTubeSourceProvider : IMusicSourceProvider
             ? (int?)durationProp.GetDouble()
             : null;
 
-        return new MusicSourceMetadata(title, artist, null, duration);
+        return new MusicSourceMetadata(title, artist, null, duration, ".mp3");
     }
 
     public async Task<Stream> GetRawStreamAsync(string sourceInput, CancellationToken cancellationToken = default)

@@ -18,8 +18,14 @@ public class LocalUploadSourceProvider : IMusicSourceProvider
     {
         var (_, fileName) = _pendingFiles[sourceInput];
         var title = Path.GetFileNameWithoutExtension(fileName);
+        var extension = Path.GetExtension(fileName);
 
-        return Task.FromResult(new MusicSourceMetadata(title, null, null, null));
+        if (string.IsNullOrEmpty(extension))
+        {
+            extension = ".bin";
+        }
+
+        return Task.FromResult(new MusicSourceMetadata(title, null, null, null, extension));
     }
 
     public Task<Stream> GetRawStreamAsync(string sourceInput, CancellationToken cancellationToken = default)

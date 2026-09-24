@@ -4,7 +4,8 @@ public record MusicSourceMetadata(
     string Title,
     string? Artist,
     string? Album,
-    int? DurationSeconds
+    int? DurationSeconds,
+    string FileExtension
 );
 
 public interface IMusicSourceProvider
