@@ -1,3 +1,4 @@
+using MediaHub.Api.BackgroundServices;
 using MediaHub.Api.Middleware;
 using MediaHub.Application.Services;
 using MediaHub.Infrastructure.Music;
@@ -20,7 +21,11 @@ builder.Services.AddScoped<LocalUploadSourceProvider>();
 builder.Services.AddSingleton<YouTubeSourceProvider>();
 
 builder.Services.AddScoped<IMusicTrackRepository, MusicTrackRepository>();
+builder.Services.AddScoped<IMusicImportJobRepository, MusicImportJobRepository>();
 builder.Services.AddScoped<MusicIngestionService>();
+
+builder.Services.AddSingleton<IBackgroundJobQueue, BackgroundJobQueue>();
+builder.Services.AddHostedService<QueuedHostedService>();
 
 var app = builder.Build();
 

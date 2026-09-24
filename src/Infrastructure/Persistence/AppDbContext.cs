@@ -15,6 +15,7 @@ public class AppDbContext : DbContext
     public DbSet<MusicTrackTag> MusicTrackTags => Set<MusicTrackTag>();
     public DbSet<MusicPlaylist> MusicPlaylists => Set<MusicPlaylist>();
     public DbSet<MusicPlaylistTrack> MusicPlaylistTracks => Set<MusicPlaylistTrack>();
+    public DbSet<MusicImportJob> MusicImportJobs => Set<MusicImportJob>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -86,6 +87,14 @@ public class AppDbContext : DbContext
                 .WithMany()
                 .HasForeignKey(pt => pt.MusicTrackId)
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<MusicImportJob>(entity =>
+        {
+            entity.ToTable("music_import_jobs");
+            entity.HasKey(j => j.Id);
+            entity.Property(j => j.SourceInput).IsRequired();
+            entity.Property(j => j.Status).IsRequired().HasConversion<string>().HasMaxLength(20);
         });
     }
 }
