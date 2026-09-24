@@ -9,15 +9,18 @@ namespace MediaHub.Api.Controllers;
 public class MusicController : ControllerBase
 {
     private readonly LocalUploadSourceProvider _localUploadProvider;
+    private readonly YouTubeSourceProvider _youTubeProvider;
     private readonly MusicIngestionService _ingestionService;
     private readonly IMusicTrackRepository _repository;
 
     public MusicController(
         LocalUploadSourceProvider localUploadProvider,
+        YouTubeSourceProvider youTubeProvider,
         MusicIngestionService ingestionService,
         IMusicTrackRepository repository)
     {
         _localUploadProvider = localUploadProvider;
+        _youTubeProvider = youTubeProvider;
         _ingestionService = ingestionService;
         _repository = repository;
     }
@@ -35,7 +38,22 @@ public class MusicController : ControllerBase
 
         _localUploadProvider.RegisterFile(sourceInput, stream, file.FileName);
 
-        var track = await _ingestionService.IngestAsync(sourceInput, file.ContentType, cancellationToken);
+        var track = await _ingestionService.IngestAsync(_localUploadProvider, sourceInput, file.ContentType, cancellationToken);
+
+        return Ok(track);
+    }
+
+    public record ImportYouTubeRequest(string Url);
+
+    [HttpPost("import-youtube")]
+    public async Task<IActionResult> ImportFromYouTube([FromBody] ImportYouTubeRequest request, CancellationToken cancellationToken)
+    {
+        if (string.IsNullOrWhiteSpace(request.Url))
+        {
+            return BadRequest("URL não informada.");
+        }
+
+        var track = await _ingestionService.IngestAsync(_youTubeProvider, request.Url, "audio/mpeg", cancellationToken);
 
         return Ok(track);
     }

@@ -17,7 +17,7 @@ builder.Services.Configure<R2StorageOptions>(builder.Configuration.GetSection("R
 builder.Services.AddSingleton<IStorageService, R2StorageService>();
 
 builder.Services.AddScoped<LocalUploadSourceProvider>();
-builder.Services.AddScoped<IMusicSourceProvider>(sp => sp.GetRequiredService<LocalUploadSourceProvider>());
+builder.Services.AddSingleton<YouTubeSourceProvider>();
 
 builder.Services.AddScoped<IMusicTrackRepository, MusicTrackRepository>();
 builder.Services.AddScoped<MusicIngestionService>();
