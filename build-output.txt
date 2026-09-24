@@ -1,0 +1,12 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  MediaHub.Domain -> /home/rodrigo/projects/media-hub-api/src/Domain/bin/Debug/net10.0/MediaHub.Domain.dll
+  MediaHub.Application -> /home/rodrigo/projects/media-hub-api/src/Application/bin/Debug/net10.0/MediaHub.Application.dll
+  MediaHub.Infrastructure -> /home/rodrigo/projects/media-hub-api/src/Infrastructure/bin/Debug/net10.0/MediaHub.Infrastructure.dll
+  MediaHub.Api -> /home/rodrigo/projects/media-hub-api/src/Api/bin/Debug/net10.0/MediaHub.Api.dll
+
+Build succeeded.
+    0 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:06.26
